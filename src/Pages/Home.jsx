@@ -29,13 +29,12 @@ const Home = () => {
                 <img src={worldImg} alt="" />
               </div>
               <h1>
-                Traveling Opens The Door To Creating{" "}
+                Traveling with TravelGO Opens The Door To Creating{" "}
                 <span className="highlight">Memories</span>
               </h1>
               <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Phasellus tempus massa vitae elit consectetur, ut convallis massa ultricies.
-              Duis hendrerit turpis quis tincidunt lobortis. Nullam vel faucibus mauris. 
+Traveling opens your mind to new cultures and perspectives, 
+helping you discover the beauty and diversity of the world while creating memories that last a lifetime.
               </p>
             </div>
           </Col>
@@ -89,9 +88,9 @@ const Home = () => {
             <div className="experience__content">
               <Subtitle subtitle={"Experience"}/>
               <h2>Will our all experience <br /> we will serve you</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+              <p>Recommended and best service are available here
                 <br />
-                 Phasellus tempus massa vitae elit consectetur, ut convallis massa ultricies. 
+                 only on the one and only TravelGO
               </p>
             </div>
 

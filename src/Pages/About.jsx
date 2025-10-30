@@ -19,7 +19,7 @@ const About = () => {
                 <img src={worldImg} alt="" />
               </div>
               <h1>
-                Traveling Opens The Door To Creating{" "}
+                Traveling  witgh TravelGO Opens The Door To Creating{" "}
                 <span className="highlight">Memories</span>
               </h1>
               <p>

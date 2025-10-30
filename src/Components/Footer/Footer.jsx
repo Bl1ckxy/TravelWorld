@@ -44,8 +44,7 @@ const Footer = () => {
             <div className="logo">
               <img src={logo} alt="" />
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                consectetur adipiscing elit.
+                this is our project which is presented to you 
               </p>
 
               <div className="social__links d-flex align-items-center gap-4">
@@ -108,10 +107,10 @@ const Footer = () => {
                 </div>
                 <p className="mb-0">
                   <Link
-                    to="mailto:support@travelgo.com"
+                    to="harshrokade016@gmail.com"
                     className="color-text"
                   >
-                    support@travelgo.com
+                    harshrokade016@gmail.com
                   </Link>
                 </p>
               </ListGroupItem>
@@ -135,15 +134,15 @@ const Footer = () => {
                   </span>
                   <h6 className="mb-0">Address:</h6>
                 </div>
-                <p className="mb-0">Mumbai, India</p>
+                <p className="mb-0">KANDIVALI,Mumbai, India</p>
               </ListGroupItem>
             </ListGroup>
           </Col>
 
           <Col lg="12" className="text-center pt-5">
             <p className="copyright">
-              Inspired from {"Dr. Sonali Ma'am"}
-              <Link to="https://shuence.netlify.app"></Link>
+              Implemented more ideas from our guide {"Dr. Sonali Pakhmode Ma'am"}
+              
             </p>
           </Col>
         </Row>
