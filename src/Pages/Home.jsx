@@ -135,13 +135,17 @@ const Home = () => {
         </Row>
       </Container>
     </section>
+    {/* Featured Blog Section */}
     <section>
       <Container>
-        <div className="title">
-          <Subtitle subtitle={"Featured Blogs"} />
-        </div>
         <Row>
-      <FeaturedBlogsList lg={4} md={6} sm={6}/>
+          <Col lg="12" className="mb-5">
+            <Subtitle subtitle={'Featured'} />
+            <h2 className="featured__blog-title">Our Featured Blogs</h2>
+          </Col>
+          <Col lg="12">
+            <FeaturedBlogsList />
+          </Col>
         </Row>
       </Container>
     </section>

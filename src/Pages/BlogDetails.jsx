@@ -1,55 +1,27 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Container, Row, Col, Form, ListGroup, Alert } from "reactstrap";
 import avtar from "../assets/images/avatar.jpg";
 import "../styles/Blogdetails.css";
-import useFetch from "../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import FeaturedBlogsList from "../Components/FeaturedBlogs.jsx/FeaturedBlogsList";
 import Subtitle from "../Shared/Subtitle";
 import Newsletter from "../Shared/Newsletter";
-import axios from "axios";
-import { BASE_URL } from "../utils/config";
 import { AuthContext } from "../context/AuthContext";
+import blogs from '../assets/data/blogs';
 
 const BlogDetails = () => {
   const { id } = useParams();
-  const [blog, setBlog] = useState({});
   const commentMsgRef = useRef("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { user } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [commentStatus, setCommentStatus] = useState(null);
   const [isLoginAlertVisible, setIsLoginAlertVisible] = useState(false);
 
-  useEffect(() => {
-    const fetchBlog = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/blogs/${id}`);
-        setBlog(response.data);
-        setLoading(false);
-      } catch (error) {
-        setError("Error loading blog details.");
-        setLoading(false);
-      }
-    };
+  const blog = blogs.find(blog => blog.id === id);
 
-    fetchBlog();
-  }, [id]);
-
-  const {
-    data: fetchedComments,
-    loading: loadingComments,
-    error: errorComments,
-  } = useFetch(`comment/${id}/`);
-
-  useEffect(() => {
-    if (fetchedComments) {
-      setComments(fetchedComments);
-    }
-  }, [fetchedComments]);
-
-  const options = { day: "numeric", month: "long", year: "numeric" };
+  if (!blog) {
+    return <div className="error__msg">Blog not found</div>;
+  }
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -60,41 +32,19 @@ const BlogDetails = () => {
     }
 
     const commentMsg = commentMsgRef.current.value;
-    const username = user.username;
-
-    const commentData = {
+    const newComment = {
+      username: user.username,
       comment: commentMsg,
-      username: username,
+      createdAt: new Date().toISOString()
     };
 
-    try {
-      const response = await axios.post(`${BASE_URL}/comment/${id}`, commentData);
-
-      setComments([...comments, response.data]);
-      commentMsgRef.current.value = "";
-      setCommentStatus("success");
-      setTimeout(() => {
-        window.location.reload();
-      }, 800);
-    } catch (error) {
-      setCommentStatus("error");
-    }
+    setComments([...comments, newComment]);
+    commentMsgRef.current.value = "";
+    setCommentStatus("success");
   };
 
-  if (loading || loadingComments) {
-    return (
-      <div className="loader-container">
-        <div className="loader" />
-        <div className="loading-text">Loading...</div>
-      </div>
-    );
-  }
-
-  if (error || !blog || errorComments) {
-    return <div className="error__msg">Error loading blog details. Check your network</div>;
-  }
-
-  const { title, author, createdAt, photo, content } = blog;
+  const { title, author, date, photo, content } = blog;
+  const options = { day: "numeric", month: "long", year: "numeric" };
 
   return (
     <>
@@ -117,7 +67,7 @@ const BlogDetails = () => {
                   <div className="blog__extra-details">
                     <span>
                       <i className="ri-calendar-line"></i>
-                      {new Date(createdAt).toLocaleDateString("en-in", options)}
+                      {new Date(date).toLocaleDateString("en-in", options)}
                     </span>
                     <span>
                       <i className="ri-chat-3-line"></i>

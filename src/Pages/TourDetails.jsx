@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Container, Row, Col, Form, ListGroup, Alert } from "reactstrap";
 import { useParams } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
 import calculateAvgRating from "../utils/avgRating";
 import avtar from "../assets/images/avatar.jpg";
 import Booking from "../Components/Booking/Booking";
 import "../styles/Tourdetails.css";
-import axios from "axios";
-import { BASE_URL } from "../utils/config";
 import { AuthContext } from "../context/AuthContext";
 import FAQ from "../Shared/FAQ";
+import tours from '../assets/data/tours';
 
 const TourDetails = () => {
   const { id } = useParams();
@@ -21,44 +19,14 @@ const TourDetails = () => {
   const [isReviewError, setIsReviewError] = useState(false);
   const [isLoginAlertVisible, setIsLoginAlertVisible] = useState(false);
 
-  // Fetch tour data using tourId (if available)
-  const {
-    data: tour,
-    loading: loadingTour,
-    error: errorTour,
-  } = useFetch(`tours/${id}`);
+  // Find tour from local data
+  const tour = tours.find(tour => tour.id === id);
 
-  // Fetch reviews for the tour using tourId (if available)
-  const {
-    data: fetchedReviews,
-    loading: loadingReviews,
-    error: errorReviews,
-  } = useFetch(`review/${id}/`);
-
-  // Fetch updated reviews from server
-  useEffect(() => {
-    if (fetchedReviews) {
-      setReviews(fetchedReviews);
-    }
-  }, [fetchedReviews]);
-
-  // Perform error handling in case the tour or reviews are still loading
-  if (loadingTour || loadingReviews) {
-    return (
-      <div className="loader-container">
-        <div className="loader" />
-        <div className="loading-text">Loading...</div>
-      </div>
-    );
+  if (!tour) {
+    return <div className="error__msg">Tour not found</div>;
   }
 
-  // Perform error handling in case there's an error fetching the tour or reviews
-  if (errorTour || !tour || errorReviews) {
-    return <div className="error__msg">Error loading tour details. Check your network</div>;
-  }
-
-  const { photo, title, desc, price, city, distance, address, maxGroupSize } =
-    tour;
+  const { photo, title, desc, price, city, distance, address, maxGroupSize } = tour;
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
   const options = { day: "numeric", month: "long", year: "numeric" };
@@ -71,33 +39,17 @@ const TourDetails = () => {
       return;
     }
 
-    const reviewMsg = reviewMsgRef.current.value;
-    const username = user.username;
-
-    const reviewData = {
+    const newReview = {
+      username: user.username,
+      reviewText: reviewMsgRef.current.value,
       rating: tourRating,
-      reviewText: reviewMsg,
-      username: username,
+      createdAt: new Date().toISOString()
     };
 
-    try {
-      const response = await axios.post(`${BASE_URL}/review/${id}`, reviewData);
-
-
-      // Update the reviews state with the new review
-      setReviews([...reviews, response.data]);
-
-      // Reset review form fields
-      setTourRating(null);
-      reviewMsgRef.current.value = "";
-
-      setIsReviewSuccess(true);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      setIsReviewError(true);
-    }
+    setReviews([...reviews, newReview]);
+    setIsReviewSuccess(true);
+    reviewMsgRef.current.value = "";
+    setTourRating(null);
   };
 
   const handleRatingClick = (value) => {

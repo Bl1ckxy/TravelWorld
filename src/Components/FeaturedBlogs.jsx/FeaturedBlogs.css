@@ -1,0 +1,34 @@
+.featured-blog-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.featured-blog-img {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.featured-blog-content {
+  flex: 1;
+}
+
+.featured-blog-content h6 {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.read-more-link {
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.read-more-link:hover {
+  color: var(--primary-color);
+}

@@ -110,10 +110,10 @@ const Footer = () => {
                 </div>
                 <p className="mb-0">
                   <Link
-                    to="mailto:support@travelworld.com"
+                    to="mailto:support@travelgo.com"
                     className="color-text"
                   >
-                    support@travelworld.com
+                    support@travelgo.com
                   </Link>
                 </p>
               </ListGroupItem>
@@ -126,7 +126,7 @@ const Footer = () => {
                   <h6 className="mb-0">Phone:</h6>
                 </div>
                 <p className="mb-0">
-                  <Link to="tel:9876543210">+91 9876543210</Link>
+                  <Link to="tel:9867380540">+91 9867380540</Link>
                 </p>
               </ListGroupItem>
 
@@ -137,16 +137,15 @@ const Footer = () => {
                   </span>
                   <h6 className="mb-0">Address:</h6>
                 </div>
-                <p className="mb-0">Pune, Maharashtra, India</p>
+                <p className="mb-0">Mumbai, India</p>
               </ListGroupItem>
             </ListGroup>
           </Col>
 
           <Col lg="12" className="text-center pt-5">
             <p className="copyright">
-              &copy; {year} Travel World. All Rights Reserved.
-              Designed and Developed By{" "}
-              <Link to="https://shuence.netlify.app">CodeShuence</Link>
+              Inspired from {"Dr. Sonali Ma'am"}
+              <Link to="https://shuence.netlify.app"></Link>
             </p>
           </Col>
         </Row>

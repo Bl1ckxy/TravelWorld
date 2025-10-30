@@ -1,35 +1,32 @@
 import React from "react";
-import { Button, Col, NavLink } from "reactstrap";
-import useFetch from "../../hooks/useFetch";
-import BlogCard from "../../Shared/BlogCard";
-import "../../Shared/Blogcard.css";
+import { Col, Row } from "reactstrap";
+import { Link } from "react-router-dom";
+import blogs from "../../assets/data/blogs";
+import "./FeaturedBlogs.css";
 
-const FeaturedBlogsList = ({ lg,sm,md }) => {
-  const { data: featuredBlogs, loading } = useFetch(`blogs/featured`);
-  
-  if (loading) {
-    return (
-      <div className="loader-container">
-        <div className="loader" />
-        <div className="loading-text">Loading...</div>
-      </div>
-    );
-  }
+const FeaturedBlogsList = () => {
+  const featuredBlogs = blogs.filter((blog) => blog.featured);
 
   return (
-    <>
-      {Array.isArray(featuredBlogs) &&
-        featuredBlogs.map((blog) => (
-          <Col lg={lg} md={md} sm={sm} className="mb-4" key={blog._id}>
-            <BlogCard blog={blog} />
-          </Col>
-        ))}
-        <div className="viall__btn">
-          <NavLink to={"/blogs"}>
-            <Button className="btn primary__btn">View All Blogs</Button>
-          </NavLink>
-        </div>
-    </>
+    <Row>
+      {featuredBlogs.map((blog) => (
+        <Col lg="12" className="mb-4" key={blog.id}>
+          <div className="featured-blog-card">
+            <img
+              src={blog.photo}
+              alt={blog.title}
+              className="featured-blog-img"
+            />
+            <div className="featured-blog-content">
+              <h6>{blog.title}</h6>
+              <Link to={`/blogs/${blog.id}`} className="read-more-link">
+                Read More
+              </Link>
+            </div>
+          </div>
+        </Col>
+      ))}
+    </Row>
   );
 };
 
